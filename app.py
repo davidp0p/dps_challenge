@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 # ---------- data preprocessing ---------- #
 
@@ -27,15 +29,34 @@ accidents_data.sort_index(inplace=True)
 
 # visualize the data
 plt.figure(figsize=(15, 6))
+sns.set(style="darkgrid")
 sns.lineplot(data=accidents_data, x='MONAT', y='WERT')
 plt.xlabel('Year')
 plt.ylabel('Accidents')
 
 plt.show()
 
-print(accidents_data.describe())
-print(accidents_data.info())
+# print(accidents_data.describe())
+# print(accidents_data.info())
+
+
+# ---------- feature engineering ----------
+
+# use lag features and rolling window for time series forecasting
+month_window = 12  # set the month window for lag and window
+for lag in range(1, month_window + 1):
+    accidents_data[f'lag_{lag}'] = accidents_data['WERT'].shift(lag)
+
+# apply rolling window to calculate mean over 12 months
+accidents_data['rolling_window'] = accidents_data['WERT'].rolling(window=month_window).mean()
+
+accidents_data = accidents_data.dropna(subset=['WERT'])
+
+# set the features and target accordingly
+features = [f'lag_{lag}' for lag in range(1, month_window + 1)] + ['rolling_window']
+X = accidents_data[features]
+
+y = accidents_data['WERT']
 
 
 
-# ----- Model training -----
