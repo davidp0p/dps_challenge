@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import pickle
 from matplotlib import pyplot as plt
 from matplotlib import dates as mdates
 from sklearn.linear_model import LinearRegression
@@ -72,6 +73,9 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, s
 # train linear regression model
 model = LinearRegression()
 model.fit(X_train, y_train)
+
+with open('prediction.pkl', 'wb') as file:
+    pickle.dump(model, file)
 
 # create prediction features for 01/2021 by using the most recent entries in the last month_window
 lag_features = accidents_data['WERT'].tail(month_window)
