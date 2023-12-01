@@ -32,13 +32,18 @@ accidents_data = accidents_data[(accidents_data['MONATSZAHL'] == 'Alkoholunfäll
 # chronological order
 accidents_data.sort_index(inplace=True)
 
-# visualize the data
+# calculate average to eliminate duplicate values for the x-axis
+plot_data = initial_data.groupby(['MONAT', 'MONATSZAHL'])['WERT'].mean().reset_index()
+
+# historically visualize the data for accidents per category 'MONATSZAHL'
 plt.figure(figsize=(12, 6))
 sns.set(style="darkgrid")
-sns.lineplot(data=accidents_data, x='MONAT', y='WERT')
+sns.lineplot(data=plot_data, x='MONAT', y='WERT', hue='MONATSZAHL', legend='full')
 plt.xlabel('Date')
 plt.ylabel('Amount of Accidents')
-# plt.show()
+plt.legend(title='Category', loc='upper right')
+plt.title('Historical Visualization of Accidents per Category')
+plt.show()
 
 
 # ---------- feature engineering ----------
