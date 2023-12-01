@@ -10,6 +10,6 @@ Run `app.py` to execute the script that forecasts the value. It also generates t
 
 The following images show the results for:
 - Accidents values by category
-  ![categories][plots/visualization_by_category]
+  ![categories](plots/visualization_by_category.png)
 - Model prediction vs. actual value
-  ![prediction][plots/visualization_prediction]
+  ![prediction](plots/visualization_prediction.png)
