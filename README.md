@@ -1,6 +1,6 @@
 # DPS AI Engineering Challenge
 
-The goal of the challenge is to historically visualize the number of accidents. The application forecasts the values for:
+The goal of the challenge is to historically visualize the number of accidents. The application should also forecast the values for:
 - Category: 'Alkoholunfälle'
 - Type: 'insgesamt'
 - Year: '2021'
